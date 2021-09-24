@@ -9,6 +9,7 @@
   "author": "Sergio Kopplin <sergiokopplin@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "@kopplin/ts-config": "^1.1.0",
     "typescript": "^4.4.3"
   }
 }
