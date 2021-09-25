@@ -5,7 +5,6 @@ export class AddAccountController implements Controller {
   constructor(private readonly addAccount: AddAccount) {}
 
   async handle(request: AddAccountController.Request): Promise<HttpResponse> {
-    console.log({ request });
     const account = this.addAccount.add(request);
     return ok(account);
   }
