@@ -1,4 +1,4 @@
-import { AccountModel, AddAccount } from 'domain';
+import { AccountModel, AddAccount } from '@/domain';
 
 export class DbAddAccount implements AddAccount {
   constructor() {}
