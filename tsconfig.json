@@ -1,6 +1,7 @@
 {
   "extends": "@kopplin/ts-config",
   "compilerOptions": {
+    "module": "commonjs",
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"]
