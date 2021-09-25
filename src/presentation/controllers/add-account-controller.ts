@@ -1,12 +1,22 @@
 import { AccountModel, AddAccount } from '@/domain';
-import { Controller, HttpResponse, ok } from '@/presentation';
+import { badRequest, Controller, HttpResponse, ok, serverError, Validation } from '@/presentation';
 
 export class AddAccountController implements Controller {
-  constructor(private readonly addAccount: AddAccount) {}
+  constructor(private readonly validation: Validation, private readonly addAccount: AddAccount) {}
 
   async handle(request: AddAccountController.Request): Promise<HttpResponse> {
-    const account = this.addAccount.add(request);
-    return ok(account);
+    try {
+      const error = this.validation.validate(request);
+
+      if (error) {
+        return badRequest(error);
+      }
+
+      const account = this.addAccount.add(request);
+      return ok(account);
+    } catch (error) {
+      return serverError(error);
+    }
   }
 }
 
