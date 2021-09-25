@@ -1,7 +1,7 @@
 import { AccountModel } from '@/domain';
 
 export interface AddAccount {
-  add(account: AddAccount.AddAccountParams): Promise<AccountModel>;
+  add(account: AddAccount.AddAccountParams): Promise<boolean>;
 }
 
 export namespace AddAccount {

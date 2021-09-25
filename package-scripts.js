@@ -8,14 +8,11 @@ module.exports = {
      */
     serve: {
       inspector: {
-        script: series(
-          'nps banner.serve',
-          'nodemon ./src/main/server.ts --watch src --watch .env --inspect',
-        ),
+        script: series('nps banner.serve', 'nodemon'),
         description:
           'Serves the current app and watches for changes to restart it, you may attach inspector to it.',
       },
-      script: series('nps banner.serve', 'nodemon ./src/main/server.ts --watch src --watch .env'),
+      script: series('nps banner.serve', 'nodemon'),
       description: 'Serves the current app and watches for changes to restart it',
     },
     banner: {

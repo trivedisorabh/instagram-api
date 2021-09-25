@@ -1,11 +1,11 @@
-import express from 'express';
+import { env } from '@/main';
+import { MongoHelper } from '@/infra/db';
 
-export const app = express();
+MongoHelper.connect(env.mongoUrl)
+  .then(async () => {
+    const { setupApp } = await import('./config/app');
+    const app = await setupApp();
 
-const PORT = process.env.PORT || 4000;
-
-app.get('/', function (req, res) {
-  res.send('hello world');
-});
-
-app.listen(PORT, () => console.log(`⚡Server is running here 👉 https://localhost:${PORT}`));
+    app.listen(env.port, () => console.log(`Server running at http://localhost:${env.port}`));
+  })
+  .catch(console.error);

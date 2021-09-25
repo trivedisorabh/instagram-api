@@ -1,7 +1,7 @@
 import { AccountModel } from '@/domain';
 
 export interface AccountRepository {
-  add(params: AccountRepository.AddParams): Promise<AccountModel>;
+  add(params: AccountRepository.AddParams): Promise<boolean>;
 }
 
 export namespace AccountRepository {

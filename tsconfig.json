@@ -2,9 +2,12 @@
   "extends": "@kopplin/ts-config",
   "compilerOptions": {
     "module": "commonjs",
-    "baseUrl": "./src",
+    "target": "es2019",
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "isolatedModules": false,
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["src/*"]
     }
   }
 }
