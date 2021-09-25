@@ -1,3 +1,6 @@
 {
-	"extends": "@kopplin/ts-config"
+  "extends": "@kopplin/ts-config",
+  "compilerOptions": {
+    "baseUrl": "./src"
+  }
 }
