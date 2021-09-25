@@ -1,6 +1,9 @@
 {
   "extends": "@kopplin/ts-config",
   "compilerOptions": {
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    }
   }
 }
