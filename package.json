@@ -20,6 +20,7 @@
     "@types/figlet": "^1.5.4",
     "@types/mongodb": "^4.0.7",
     "@types/nodemon": "^1.19.1",
+    "@types/validator": "^13.6.3",
     "chalk": "^4.1.2",
     "figlet": "^1.5.2",
     "husky": "^7.0.2",
@@ -32,6 +33,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "mongodb": "^4.1.2"
+    "mongodb": "^4.1.2",
+    "validator": "^13.6.0"
   }
 }
