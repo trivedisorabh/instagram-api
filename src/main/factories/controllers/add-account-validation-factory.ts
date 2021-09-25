@@ -1,5 +1,6 @@
-import { ValidationComposite, RequiredFieldValidation } from '@/presentation';
-import { Validation } from '@/presentation/protocols';
+import { EmailValidatorAdapter } from '@/infra';
+import { ValidationComposite, RequiredFieldValidation, EmailValidation } from '@/presentation';
+import { Validation } from '@/presentation';
 
 export const makeAddAccountValidation = (): ValidationComposite => {
   const validations: Validation[] = [];
@@ -7,6 +8,8 @@ export const makeAddAccountValidation = (): ValidationComposite => {
   for (const field of ['name', 'email', 'username', 'password']) {
     validations.push(new RequiredFieldValidation(field));
   }
+
+  validations.push(new EmailValidation('email', new EmailValidatorAdapter()));
 
   return new ValidationComposite(validations);
 };
