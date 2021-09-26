@@ -1,11 +1,17 @@
 import { Authentication } from '@/domain';
-import { LoadByEmailRepository, HashComparer, Encrypter } from '@/data';
+import {
+  LoadByEmailRepository,
+  HashComparer,
+  Encrypter,
+  UpdateAccessTokenRepository,
+} from '@/data';
 
 export class DbAuthentication implements Authentication {
   constructor(
     private readonly loadByEmail: LoadByEmailRepository,
     private readonly hashComparer: HashComparer,
     private readonly encrypt: Encrypter,
+    private readonly updateAccessToken: UpdateAccessTokenRepository,
   ) {}
 
   async auth(params: Authentication.Params): Promise<Authentication.Result> {
@@ -20,7 +26,9 @@ export class DbAuthentication implements Authentication {
     const isValid = await this.hashComparer.compare(params.password, account.password);
 
     if (isValid) {
-      const accessToken = await this.encrypt.encrypt(params.password);
+      const accessToken = await this.encrypt.encrypt(account.id);
+
+      await this.updateAccessToken.updateAccessToken({ id: account.id, accessToken });
 
       return {
         accessToken,

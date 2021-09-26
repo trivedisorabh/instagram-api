@@ -8,5 +8,10 @@ export const makeDbAuthentication = (): Authentication => {
   const bcryptAdapter = new BcryptAdapter();
   const jsonWebTokenAdapter = new JsonWebTokenAdapter(env.authSecret);
 
-  return new DbAuthentication(accountMongoRepository, bcryptAdapter, jsonWebTokenAdapter);
+  return new DbAuthentication(
+    accountMongoRepository,
+    bcryptAdapter,
+    jsonWebTokenAdapter,
+    accountMongoRepository,
+  );
 };
