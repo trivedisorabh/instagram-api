@@ -1,16 +1,21 @@
-import { AccountModel, AddAccount } from '@/domain';
+import { AccountModel, AddAccount, LoadAccountByEmail } from '@/domain';
 import {
   badRequest,
   Controller,
   HttpResponse,
-  ok,
   serverError,
   Validation,
   noContent,
+  forbidden,
+  EmailInUseError,
 } from '@/presentation';
 
 export class AddAccountController implements Controller {
-  constructor(private readonly validation: Validation, private readonly addAccount: AddAccount) {}
+  constructor(
+    private readonly validation: Validation,
+    private readonly addAccount: AddAccount,
+    private readonly loadAccountByEmail: LoadAccountByEmail,
+  ) {}
 
   async handle(request: AddAccountController.Request): Promise<HttpResponse> {
     try {
@@ -18,6 +23,12 @@ export class AddAccountController implements Controller {
 
       if (error) {
         return badRequest(error);
+      }
+
+      const hasAccount = await this.loadAccountByEmail.load({ email: request.email });
+
+      if (hasAccount) {
+        return forbidden(new EmailInUseError());
       }
 
       await this.addAccount.add(request);
