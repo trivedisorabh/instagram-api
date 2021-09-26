@@ -1,4 +1,4 @@
-import { AccountModel, AddAccount, LoadAccountByEmail } from '@/domain';
+import { AccountModel, AddAccount } from '@/domain';
 import {
   badRequest,
   Controller,
@@ -11,11 +11,7 @@ import {
 } from '@/presentation';
 
 export class AddAccountController implements Controller {
-  constructor(
-    private readonly validation: Validation,
-    private readonly addAccount: AddAccount,
-    private readonly loadAccountByEmail: LoadAccountByEmail,
-  ) {}
+  constructor(private readonly validation: Validation, private readonly addAccount: AddAccount) {}
 
   async handle(request: AddAccountController.Request): Promise<HttpResponse> {
     try {
@@ -25,13 +21,11 @@ export class AddAccountController implements Controller {
         return badRequest(error);
       }
 
-      const hasAccount = await this.loadAccountByEmail.load({ email: request.email });
+      const isValid = await this.addAccount.add(request);
 
-      if (hasAccount) {
+      if (!isValid) {
         return forbidden(new EmailInUseError());
       }
-
-      await this.addAccount.add(request);
 
       return noContent();
     } catch (error) {
