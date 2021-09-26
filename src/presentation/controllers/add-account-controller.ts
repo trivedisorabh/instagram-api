@@ -1,5 +1,13 @@
 import { AccountModel, AddAccount } from '@/domain';
-import { badRequest, Controller, HttpResponse, ok, serverError, Validation } from '@/presentation';
+import {
+  badRequest,
+  Controller,
+  HttpResponse,
+  ok,
+  serverError,
+  Validation,
+  noContent,
+} from '@/presentation';
 
 export class AddAccountController implements Controller {
   constructor(private readonly validation: Validation, private readonly addAccount: AddAccount) {}
@@ -12,8 +20,9 @@ export class AddAccountController implements Controller {
         return badRequest(error);
       }
 
-      const account = this.addAccount.add(request);
-      return ok(account);
+      await this.addAccount.add(request);
+
+      return noContent();
     } catch (error) {
       return serverError(error);
     }

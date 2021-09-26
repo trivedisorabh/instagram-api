@@ -5,6 +5,10 @@ export const ok = (data: any): HttpResponse => ({
   body: data,
 });
 
+export const noContent = (): HttpResponse => ({
+  statusCode: 204,
+});
+
 export const badRequest = (error: any): HttpResponse => ({
   statusCode: 400,
   body: error,
