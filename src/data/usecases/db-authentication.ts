@@ -1,15 +1,15 @@
 import { Authentication } from '@/domain';
-import { AccountRepository, HashComparer, Encrypter } from '@/data';
+import { LoadByEmailRepository, HashComparer, Encrypter } from '@/data';
 
 export class DbAuthentication implements Authentication {
   constructor(
-    private readonly accountRepository: AccountRepository,
+    private readonly loadByEmail: LoadByEmailRepository,
     private readonly hashComparer: HashComparer,
     private readonly encrypt: Encrypter,
   ) {}
 
   async auth(params: Authentication.Params): Promise<Authentication.Result> {
-    const account = await this.accountRepository.loadByEmail({
+    const account = await this.loadByEmail.loadByEmail({
       email: params.email,
     });
 
