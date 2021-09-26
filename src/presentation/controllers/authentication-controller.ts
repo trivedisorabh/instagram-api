@@ -1,5 +1,14 @@
 import { AccountModel, Authentication } from '@/domain';
-import { badRequest, Controller, HttpResponse, serverError, Validation } from '@/presentation';
+import {
+  badRequest,
+  Controller,
+  HttpResponse,
+  ok,
+  serverError,
+  Validation,
+  unauthorized,
+  UnauthorizedError,
+} from '@/presentation';
 
 export class AuthenticationController implements Controller {
   constructor(
@@ -15,9 +24,13 @@ export class AuthenticationController implements Controller {
         return badRequest(error);
       }
 
-      const isValid = await this.authentication.auth(request);
+      const result = await this.authentication.auth(request);
 
-      return null;
+      if (!result) {
+        return unauthorized(new UnauthorizedError());
+      }
+
+      return ok({});
     } catch (error) {
       return serverError(error);
     }

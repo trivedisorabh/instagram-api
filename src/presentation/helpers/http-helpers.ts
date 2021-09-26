@@ -14,6 +14,11 @@ export const badRequest = (error: any): HttpResponse => ({
   body: error,
 });
 
+export const unauthorized = (error: Error): HttpResponse => ({
+  statusCode: 401,
+  body: error,
+});
+
 export const forbidden = (error: Error): HttpResponse => ({
   statusCode: 403,
   body: error,
