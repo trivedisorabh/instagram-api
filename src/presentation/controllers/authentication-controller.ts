@@ -30,7 +30,7 @@ export class AuthenticationController implements Controller {
         return unauthorized(new UnauthorizedError());
       }
 
-      return ok({});
+      return ok(result);
     } catch (error) {
       return serverError(error);
     }
