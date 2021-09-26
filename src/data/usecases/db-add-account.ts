@@ -1,8 +1,11 @@
 import { AddAccount } from '@/domain';
-import { AccountRepository } from '@/data';
+import { AccountRepository, Hasher } from '@/data';
 
 export class DbAddAccount implements AddAccount {
-  constructor(private readonly accountRepository: AccountRepository) {}
+  constructor(
+    private readonly accountRepository: AccountRepository,
+    private readonly hasher: Hasher,
+  ) {}
 
   async add(account: AddAccount.AddAccountParams): Promise<boolean> {
     const hasAccount = await this.accountRepository.loadByEmail({ email: account.email });
@@ -11,7 +14,8 @@ export class DbAddAccount implements AddAccount {
       return false;
     }
 
-    const result = await this.accountRepository.add(account);
+    const hashedPassword = await this.hasher.hash(account.password);
+    const result = await this.accountRepository.add({ ...account, password: hashedPassword });
 
     return result;
   }
