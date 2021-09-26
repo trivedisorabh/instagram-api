@@ -12,9 +12,7 @@ export class DbAuthentication implements Authentication {
       email: params.email,
     });
 
-    const isValid = await this.hashComparer.compare(account.password, params.password);
-
-    console.log({ isValid });
+    const isValid = await this.hashComparer.compare(params.password, account.password);
 
     return null;
   }

@@ -9,6 +9,10 @@ export class AccountMongoRepository implements AccountRepository {
     return !!result.insertedId;
   }
 
+  async auth(params: AccountRepository.AuthParams): Promise<AccountRepository.AuthResult> {
+    return null;
+  }
+
   async loadByEmail(params: AccountRepository.LoadByEmailParams): Promise<AccountModel> {
     const collection = MongoHelper.getCollection('accounts');
     const account = await collection.findOne({ email: params.email });
